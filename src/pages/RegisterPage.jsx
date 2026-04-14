@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { User, Mail, Lock, Fingerprint, ArrowRight, ShieldCheck, ShieldAlert, Eye, EyeOff } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -32,7 +32,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+    <div style={{ display: 'flex', minHeight: '100vh', alignItems: 'center', justifyContent: 'center', position: 'relative', padding: '1rem' }}>
       <div className="mesh-gradient" />
       <div className="grid-overlay" />
 
@@ -40,97 +40,97 @@ const RegisterPage = () => {
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         className="glass cyber-border" 
-        style={{ width: '100%', maxWidth: '500px', padding: '4rem', position: 'relative', overflow: 'hidden' }}
+        style={{ width: '100%', maxWidth: '480px', padding: 'clamp(1.5rem, 5vw, 3rem)', position: 'relative', overflow: 'hidden' }}
       >
         {registering && <div className="scanner-line" />}
 
-        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
           <motion.div 
             animate={{ rotateY: [0, 360] }}
             transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
             style={{ 
               background: 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))',
-              padding: '20px',
-              borderRadius: '24px',
+              padding: '16px',
+              borderRadius: '20px',
               display: 'inline-flex',
-              marginBottom: '1.5rem',
+              marginBottom: '1rem',
               boxShadow: '0 10px 30px rgba(0, 242, 255, 0.3)'
             }}>
-            <ShieldCheck color="white" size={40} />
+            <ShieldCheck color="white" size={32} />
           </motion.div>
-          <h2 style={{ fontSize: '2.5rem', fontWeight: 900 }}>Profile <span className="gradient-text">Init</span></h2>
-          <p style={{ color: 'var(--text-secondary)', marginTop: '0.8rem' }}>Generate your sovereign identity matrix</p>
+          <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.2rem)', fontWeight: 900 }}>Profile <span className="gradient-text">Init</span></h2>
+          <p style={{ color: 'var(--text-secondary)', marginTop: '0.5rem', fontSize: '0.9rem' }}>Generate your sovereign identity matrix</p>
         </div>
 
         {error && (
-          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} style={{ marginBottom: '2rem' }}>
-            <div style={{ background: 'rgba(255,51,102,0.1)', border: '1px solid var(--danger)', padding: '1rem', borderRadius: '12px', display: 'flex', gap: '10px', alignItems: 'center', color: 'var(--danger)', fontSize: '0.85rem' }}>
-              <ShieldAlert size={18} /> {error}
+          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} style={{ marginBottom: '1.5rem' }}>
+            <div style={{ background: 'rgba(255,51,102,0.1)', border: '1px solid var(--danger)', padding: '0.8rem', borderRadius: '12px', display: 'flex', gap: '10px', alignItems: 'center', color: 'var(--danger)', fontSize: '0.8rem' }}>
+              <ShieldAlert size={16} /> {error}
             </div>
           </motion.div>
         )}
 
         <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: '1.5rem' }}>
-            <label style={{ display: 'block', marginBottom: '10px', fontSize: '0.8rem', fontWeight: 'bold', color: 'var(--text-secondary)' }}>OPERATIVE DESIGNATION</label>
+          <div style={{ marginBottom: '1.25rem' }}>
+            <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.75rem', fontWeight: 'bold', color: 'var(--text-secondary)' }}>OPERATIVE DESIGNATION</label>
             <div style={{ position: 'relative' }}>
-              <User style={{ position: 'absolute', left: '15px', top: '50%', transform: 'translateY(-50%)', opacity: 0.4 }} size={18} />
+              <User style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', opacity: 0.4 }} size={16} />
               <input 
                 type="text" 
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                style={{ width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid var(--glass-border)', borderRadius: '12px', padding: '15px 15px 15px 50px', color: 'white', outline: 'none' }} 
+                style={{ width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid var(--glass-border)', borderRadius: '10px', padding: '12px 12px 12px 40px', color: 'white', outline: 'none', fontSize: '0.9rem' }} 
                 placeholder="Neo"
               />
             </div>
           </div>
 
-          <div style={{ marginBottom: '1.5rem' }}>
-            <label style={{ display: 'block', marginBottom: '10px', fontSize: '0.8rem', fontWeight: 'bold', color: 'var(--text-secondary)' }}>IDENTITY (EMAIL)</label>
+          <div style={{ marginBottom: '1.25rem' }}>
+            <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.75rem', fontWeight: 'bold', color: 'var(--text-secondary)' }}>IDENTITY (EMAIL)</label>
             <div style={{ position: 'relative' }}>
-              <Mail style={{ position: 'absolute', left: '15px', top: '50%', transform: 'translateY(-50%)', opacity: 0.4 }} size={18} />
+              <Mail style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', opacity: 0.4 }} size={16} />
               <input 
                 type="email" 
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                style={{ width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid var(--glass-border)', borderRadius: '12px', padding: '15px 15px 15px 50px', color: 'white', outline: 'none' }} 
+                style={{ width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid var(--glass-border)', borderRadius: '10px', padding: '12px 12px 12px 40px', color: 'white', outline: 'none', fontSize: '0.9rem' }} 
                 placeholder="neo@matrix.net"
               />
             </div>
           </div>
 
-          <div style={{ marginBottom: '2.5rem' }}>
-            <label style={{ display: 'block', marginBottom: '10px', fontSize: '0.8rem', fontWeight: 'bold', color: 'var(--text-secondary)' }}>ACCESS KEY (PASSWORD)</label>
+          <div style={{ marginBottom: '2rem' }}>
+            <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.75rem', fontWeight: 'bold', color: 'var(--text-secondary)' }}>ACCESS KEY (PASSWORD)</label>
             <div style={{ position: 'relative' }}>
-              <Lock style={{ position: 'absolute', left: '15px', top: '50%', transform: 'translateY(-50%)', opacity: 0.4 }} size={18} />
+              <Lock style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', opacity: 0.4 }} size={16} />
               <input 
                 type={showPass ? "text" : "password"} 
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                style={{ width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid var(--glass-border)', borderRadius: '12px', padding: '15px 50px 15px 50px', color: 'white', outline: 'none' }} 
-                placeholder="••••••••••••"
+                style={{ width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid var(--glass-border)', borderRadius: '10px', padding: '12px 40px 12px 40px', color: 'white', outline: 'none', fontSize: '0.9rem' }} 
+                placeholder="••••••••"
               />
               <button 
                 type="button"
                 onClick={() => setShowPass(!showPass)}
-                style={{ position: 'absolute', right: '15px', top: '50%', transform: 'translateY(-50%)', opacity: 0.5, border: 'none', background: 'none' }}
+                style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', opacity: 0.5, border: 'none', background: 'none' }}
               >
-                {showPass ? <EyeOff size={18} /> : <Eye size={18} />}
+                {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
             </div>
           </div>
 
-          <button type="submit" className="btn-primary" style={{ width: '100%', justifyContent: 'center', padding: '16px' }} disabled={registering}>
-            {registering ? 'GENERATING MATRICES...' : <><Fingerprint size={20} /> INITIALIZE LINK</>}
+          <button type="submit" className="btn-primary" style={{ width: '100%', justifyContent: 'center', padding: '14px' }} disabled={registering}>
+            {registering ? 'GENERATING...' : <><Fingerprint size={18} /> INITIALIZE LINK</>}
           </button>
         </form>
 
-        <div style={{ textAlign: 'center', marginTop: '2.5rem' }}>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-            Existing Operative? <Link to="/login" style={{ color: 'var(--accent-purple)', fontWeight: 'bold', textDecoration: 'underline' }}>Login to Node</Link>
+        <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
+            Existing Operative? <Link to="/login" style={{ color: 'var(--accent-purple)', fontWeight: 'bold', textDecoration: 'none' }}>Login to Node</Link>
           </p>
         </div>
       </motion.div>

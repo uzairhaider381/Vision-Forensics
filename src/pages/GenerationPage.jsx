@@ -38,22 +38,22 @@ const GenerationPage = () => {
   };
 
   return (
-    <div style={{ paddingTop: '120px', minHeight: '100vh', maxWidth: '1400px', margin: '0 auto', padding: '0 2rem' }}>
+    <div className="container" style={{ paddingTop: 'clamp(100px, 12vh, 140px)', paddingBottom: '4rem' }}>
       <div className="mesh-gradient" />
       <div className="grid-overlay" />
 
-      <div style={{ display: 'grid', gridTemplateColumns: '400px 1fr 300px', gap: '2rem' }}>
+      <div className="responsive-grid mobile-stack" style={{ gridTemplateColumns: 'minmax(300px, 400px) 1fr', gap: '2rem' }}>
         {/* Left Column: Input */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
           <motion.div initial={{ x: -20, opacity: 0 }} animate={{ x: 0, opacity: 1 }}>
-            <h2 style={{ fontSize: '2.5rem', fontWeight: 900, marginBottom: '0.5rem' }}>Neural <span className="gradient-text">Forge</span></h2>
+            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 2.5rem)', fontWeight: 900, marginBottom: '0.5rem' }}>Neural <span className="gradient-text">Forge</span></h2>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--success)', fontSize: '0.75rem', fontWeight: 'bold' }}>
               <div style={{ width: 8, height: 8, background: 'var(--success)', borderRadius: '50%', boxShadow: '0 0 8px var(--success)' }} />
               MODEL ACTIVE: {settings.activeModel.name.toUpperCase()}
             </div>
           </motion.div>
 
-          <div className="glass cyber-border" style={{ padding: '2rem' }}>
+          <div className="glass cyber-border" style={{ padding: 'clamp(1.5rem, 4vw, 2rem)' }}>
             <div style={{ display: 'flex', gap: '10px', marginBottom: '1.5rem', background: 'rgba(0,0,0,0.3)', padding: '5px', borderRadius: '14px' }}>
               <button 
                 onClick={() => setType('image')}
@@ -61,7 +61,7 @@ const GenerationPage = () => {
                   flex: 1, padding: '12px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
                   background: type === 'image' ? 'var(--glass-border)' : 'transparent',
                   color: type === 'image' ? 'var(--accent-cyan)' : 'var(--text-secondary)',
-                  border: 'none', transition: '0.3s'
+                  border: 'none', transition: '0.3s', cursor: 'pointer', fontSize: '0.8rem'
                 }}
               >
                 <ImageIcon size={18} /> IMAGE
@@ -72,7 +72,7 @@ const GenerationPage = () => {
                   flex: 1, padding: '12px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
                   background: type === 'video' ? 'var(--glass-border)' : 'transparent',
                   color: type === 'video' ? 'var(--accent-cyan)' : 'var(--text-secondary)',
-                  border: 'none', transition: '0.3s'
+                  border: 'none', transition: '0.3s', cursor: 'pointer', fontSize: '0.8rem'
                 }}
               >
                 <Video size={18} /> VIDEO
@@ -80,14 +80,14 @@ const GenerationPage = () => {
             </div>
 
             <div style={{ marginBottom: '1.5rem' }}>
-              <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 'bold', display: 'block', marginBottom: '10px' }}>PROMPT SPECIFICATION</label>
+              <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: 'bold', display: 'block', marginBottom: '10px' }}>PROMPT SPECIFICATION</label>
               <textarea 
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
-                placeholder={`Detailed description for ${settings.activeModel.provider} synthesis...`}
+                placeholder={`Detailed description...`}
                 style={{
-                  width: '100%', height: '180px', background: 'rgba(0,0,0,0.2)', border: '1px solid var(--glass-border)', borderRadius: '16px',
-                  padding: '1.5rem', color: 'white', fontSize: '1rem', resize: 'none', outline: 'none', transition: '0.3s',
+                  width: '100%', height: 'clamp(120px, 20vh, 180px)', background: 'rgba(0,0,0,0.2)', border: '1px solid var(--glass-border)', borderRadius: '16px',
+                  padding: '1rem', color: 'white', fontSize: '1rem', resize: 'none', outline: 'none', transition: '0.3s',
                   lineHeight: '1.6', fontFamily: 'inherit'
                 }}
               />
@@ -100,12 +100,7 @@ const GenerationPage = () => {
               disabled={generating || !prompt}
             >
               {generating ? (
-                <>
-                  <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1 }}>
-                    <Zap size={20} />
-                  </motion.div>
-                  SYNTHESIZING...
-                </>
+                <>SYNTHESIZING...</>
               ) : (
                 <>
                   <Wand2 size={20} /> INITIALIZE {type.toUpperCase()}
@@ -113,27 +108,29 @@ const GenerationPage = () => {
               )}
             </button>
           </div>
-
-          <div className="glass" style={{ padding: '1.5rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-              <h4 style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>ENGINE SETTINGS</h4>
-              <Settings size={16} color="var(--text-secondary)" />
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', fontSize: '0.7rem' }}>
-              <div style={{ padding: '10px', background: 'rgba(255,255,255,0.02)', borderRadius: '8px', border: '1px solid var(--glass-border)' }}>
-                PROVIDER: {settings.activeModel.provider}
+          
+          <div className="mobile-hide">
+            <div className="glass" style={{ padding: '1.5rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                <h4 style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>ENGINE SETTINGS</h4>
+                <Settings size={16} color="var(--text-secondary)" />
               </div>
-              <div style={{ padding: '10px', background: 'rgba(255,255,255,0.02)', borderRadius: '8px', border: '1px solid var(--glass-border)' }}>
-                TIER: Premium
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', fontSize: '0.7rem' }}>
+                <div style={{ padding: '10px', background: 'rgba(255,255,255,0.02)', borderRadius: '8px', border: '1px solid var(--glass-border)' }}>
+                  PROVIDER: {settings.activeModel.provider}
+                </div>
+                <div style={{ padding: '10px', background: 'rgba(255,255,255,0.02)', borderRadius: '8px', border: '1px solid var(--glass-border)' }}>
+                  TIER: Premium
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Center Column: viewport */}
+        {/* Right Column: viewport & history stacked on mobile */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           <div className="glass cyber-border" style={{ 
-            flex: 1, minHeight: '600px', background: 'rgba(0,0,0,0.5)', overflow: 'hidden', position: 'relative',
+            flex: 1, minHeight: 'clamp(300px, 60vh, 600px)', background: 'rgba(0,0,0,0.5)', overflow: 'hidden', position: 'relative',
             display: 'flex', alignItems: 'center', justifyContent: 'center'
           }}>
             {generating && <div className="scanner-line" />}
@@ -141,33 +138,27 @@ const GenerationPage = () => {
             <AnimatePresence mode="wait">
               {!generatedMedia && !generating && (
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 0.3 }} exit={{ opacity: 0 }} style={{ textAlign: 'center' }}>
-                  <Boxes size={100} style={{ marginBottom: '1rem' }} />
-                  <p style={{ fontWeight: 700, letterSpacing: '2px' }}>AWAITING INPUT NEURAL-DATA</p>
+                  <Boxes size={64} style={{ marginBottom: '1rem' }} />
+                  <p style={{ fontWeight: 700, letterSpacing: '2px', fontSize: '0.8rem' }}>AWAITING INPUT NEURAL-DATA</p>
                 </motion.div>
               )}
 
               {generating && (
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ textAlign: 'center' }}>
                   <motion.div 
-                    animate={{ 
-                      scale: [1, 1.1, 1],
-                      opacity: [0.5, 1, 0.5]
-                    }} 
+                    animate={{ scale: [1, 1.05, 1], opacity: [0.5, 1, 0.5] }} 
                     transition={{ repeat: Infinity, duration: 2 }}
-                    style={{ fontSize: '1.5rem', fontWeight: 900, color: 'var(--accent-cyan)' }}
+                    style={{ fontSize: '1.2rem', fontWeight: 900, color: 'var(--accent-cyan)' }}
                   >
-                    {settings.activeModel.name.toUpperCase()} PROCESSING...
+                    PROCESSING...
                   </motion.div>
-                  <div style={{ marginTop: '1rem', fontSize: '0.8rem', color: 'var(--text-secondary)', fontFamily: 'monospace' }}>
-                    0x84A... Mapped to Latent Space
-                  </div>
                 </motion.div>
               )}
 
               {generatedMedia && !generating && (
                 <motion.div 
-                  initial={{ opacity: 0, scale: 1.1 }} 
-                  animate={{ opacity: 1, scale: 1 }} 
+                  initial={{ opacity: 0 }} 
+                  animate={{ opacity: 1 }} 
                   style={{ width: '100%', height: '100%', position: 'relative' }}
                 >
                   {type === 'image' ? (
@@ -176,12 +167,9 @@ const GenerationPage = () => {
                     <video src={generatedMedia} autoPlay loop controls style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                   )}
                   
-                  <div style={{ position: 'absolute', bottom: '2rem', right: '2rem', display: 'flex', gap: '1rem' }}>
-                    <button className="btn-secondary glass" style={{ padding: '12px 20px', display: 'flex', gap: '8px', alignItems: 'center', fontWeight: 'bold' }}>
-                      <Maximize2 size={18} /> FULLSCREEN
-                    </button>
-                    <button className="btn-primary" style={{ padding: '12px 20px' }}>
-                      <Download size={18} /> SAVE ASSET
+                  <div style={{ position: 'absolute', bottom: '1rem', right: '1rem', display: 'flex', gap: '0.5rem' }}>
+                    <button className="btn-primary" style={{ padding: '10px 16px', fontSize: '0.8rem' }}>
+                      <Download size={16} /> SAVE
                     </button>
                   </div>
                 </motion.div>
@@ -189,53 +177,32 @@ const GenerationPage = () => {
             </AnimatePresence>
           </div>
           
-          <div className="glass" style={{ padding: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div style={{ display: 'flex', gap: '2rem' }}>
-              <div style={{ fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Layers size={14} color="var(--accent-purple)" /> 
-                <span style={{ color: 'var(--text-secondary)' }}>LATENCY:</span> 1.2s
+          <div className="responsive-grid grid-2 mobile-stack">
+            <div className="glass" style={{ padding: '1.5rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1.5rem' }}>
+                <History size={18} color="var(--accent-pink)" />
+                <h4 style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>RECENT</h4>
               </div>
-              <div style={{ fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Cpu size={14} color="var(--accent-cyan)" /> 
-                <span style={{ color: 'var(--text-secondary)' }}>POWER:</span> Ultra
+
+              <div style={{ display: 'flex', gap: '1rem', overflowX: 'auto', paddingBottom: '1rem' }}>
+                {history.length === 0 ? (
+                  <p style={{ fontSize: '0.7rem', color: 'var(--text-secondary)' }}>Empty vault.</p>
+                ) : (
+                  history.map((item, i) => (
+                    <motion.div key={i} className="glass" style={{ minWidth: '80px', height: '80px', overflow: 'hidden' }}>
+                      <img src={item.url} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="" />
+                    </motion.div>
+                  ))
+                )}
               </div>
             </div>
-            <div style={{ fontSize: '0.75rem', fontWeight: 'bold', color: 'var(--success)' }}>SYSTEM NOMINAL</div>
-          </div>
-        </div>
 
-        {/* Right Column: History & Queue */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-          <div className="glass" style={{ padding: '1.5rem', flex: 1 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1.5rem' }}>
-              <History size={18} color="var(--accent-pink)" />
-              <h4 style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>RECENT FORMS</h4>
+            <div className="glass mobile-hide" style={{ padding: '1.5rem', background: 'rgba(255, 0, 200, 0.05)', borderColor: 'rgba(255, 0, 200, 0.2)' }}>
+              <h4 style={{ fontSize: '1rem', marginBottom: '0.5rem', color: 'var(--accent-pink)' }}>Neural Network</h4>
+              <p style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
+                Encrypted via Q-Safe. Generated assets are secured in private enclave.
+              </p>
             </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              {history.length === 0 ? (
-                <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '2rem' }}>No history yet.</p>
-              ) : (
-                history.map((item, i) => (
-                  <motion.div initial={{ x: 20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} key={i} className="glass glass-hover" style={{ padding: '10px', cursor: 'pointer', overflow: 'hidden' }}>
-                    <div style={{ display: 'flex', gap: '10px' }}>
-                      <img src={item.url} style={{ width: '50px', height: '50px', borderRadius: '8px', objectFit: 'cover' }} alt="" />
-                      <div style={{ flex: 1 }}>
-                        <div style={{ fontSize: '0.7rem', color: 'var(--accent-cyan)', fontWeight: 'bold', marginBottom: '4px' }}>{item.engine}</div>
-                        <p style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '150px' }}>{item.prompt}</p>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))
-              )}
-            </div>
-          </div>
-
-          <div className="glass" style={{ padding: '2rem', background: 'rgba(255, 0, 200, 0.05)', borderColor: 'rgba(255, 0, 200, 0.2)' }}>
-            <h4 style={{ fontSize: '1.1rem', marginBottom: '1rem', color: 'var(--accent-pink)' }}>Neural Network</h4>
-            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
-              Connected to global relay {settings.encryptionType === 'quantum-safe-lattice-v1' ? 'Q-Safe-N1' : 'Secure-X1'}. All generations are encrypted end-to-end.
-            </p>
           </div>
         </div>
       </div>

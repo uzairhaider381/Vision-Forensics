@@ -1,20 +1,15 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
+  const [user, setUser] = useState(() => {
     const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
-    setLoading(false);
-  }, []);
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
+  const [loading] = useState(false);
 
-  const login = (email, password) => {
+  const login = (email, _password) => {
     // Mock login logic
     const mockUser = {
       id: '1',
@@ -28,7 +23,7 @@ export const AuthProvider = ({ children }) => {
     return true;
   };
 
-  const register = (email, password, name) => {
+  const register = (email, _password, name) => {
     // Mock register logic
     const mockUser = {
       id: Math.random().toString(36).substr(2, 9),
